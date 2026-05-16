@@ -1,8 +1,21 @@
-import { useState } from "react";
-import { emptyTask } from "../Interfaces/taskModel";
+import { useEffect, useState } from "react";
+import { emptyTask, taskStatuses } from "../Interfaces/taskModel";
 
-function TaskForm({ onAddTask }) {
+function TaskForm({ editingTask, onAddTask, onUpdateTask, onCancelEdit }) {
   const [formData, setFormData] = useState(emptyTask);
+  const isEditing = Boolean(editingTask);
+
+  useEffect(() => {
+    if (editingTask) {
+      setFormData({
+        title: editingTask.title,
+        description: editingTask.description,
+        status: editingTask.status,
+      });
+    } else {
+      setFormData(emptyTask);
+    }
+  }, [editingTask]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,11 +32,17 @@ function TaskForm({ onAddTask }) {
       return;
     }
 
-    onAddTask({
+    const savedTask = {
       ...formData,
       title: formData.title.trim(),
       description: formData.description.trim(),
-    });
+    };
+
+    if (isEditing) {
+      onUpdateTask(editingTask.id, savedTask);
+    } else {
+      onAddTask(savedTask);
+    }
 
     setFormData(emptyTask);
   };
@@ -54,7 +73,29 @@ function TaskForm({ onAddTask }) {
         />
       </div>
 
-      <button type="submit">Görev Ekle</button>
+      <div className="form-row">
+        <label htmlFor="status">Durum</label>
+        <select
+          id="status"
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+        >
+          <option value={taskStatuses.pending}>Bekliyor</option>
+          <option value={taskStatuses.completed}>Tamamlandı</option>
+        </select>
+      </div>
+
+      <div className="form-actions">
+        <button type="submit">
+          {isEditing ? "Görevi Güncelle" : "Görev Ekle"}
+        </button>
+        {isEditing && (
+          <button type="button" className="secondary-button" onClick={onCancelEdit}>
+            İptal
+          </button>
+        )}
+      </div>
     </form>
   );
 }

@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
 
-function TaskList({ tasks }) {
+function TaskList({ tasks, onEditTask, onDeleteTask }) {
   if (!tasks.length) {
     return <p className="empty-message">Henüz görev eklenmedi.</p>;
   }
@@ -8,7 +8,12 @@ function TaskList({ tasks }) {
   return (
     <ul className="task-list">
       {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem
+          key={task.id}
+          task={task}
+          onEditTask={onEditTask}
+          onDeleteTask={onDeleteTask}
+        />
       ))}
     </ul>
   );
