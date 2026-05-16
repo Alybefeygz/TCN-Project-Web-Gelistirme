@@ -44,4 +44,6 @@ http://localhost:5173/
 
 ## Canlı Link
 
-Netlify linki eklenecek.
+Proje Vercel ile yayına alınmıştır.
+
+https://tcn-project-web-gelistirme.vercel.app
