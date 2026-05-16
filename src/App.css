@@ -68,7 +68,8 @@
 }
 
 .form-row input,
-.form-row textarea {
+.form-row textarea,
+.form-row select {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #cfd7e3;
@@ -84,14 +85,21 @@
 }
 
 .form-row input:focus,
-.form-row textarea:focus {
+.form-row textarea:focus,
+.form-row select:focus {
   outline: 2px solid #93c5fd;
   outline-offset: 1px;
   border-color: #3b82f6;
 }
 
-.task-form button {
-  justify-self: start;
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.task-form button,
+.task-actions button {
   border: 0;
   border-radius: 6px;
   padding: 10px 16px;
@@ -102,8 +110,18 @@
   cursor: pointer;
 }
 
-.task-form button:hover {
+.task-form button:hover,
+.task-actions button:hover {
   background: #1d4ed8;
+}
+
+.task-form .secondary-button {
+  color: #253043;
+  background: #e5eaf1;
+}
+
+.task-form .secondary-button:hover {
+  background: #d7dee9;
 }
 
 .task-list {
@@ -136,6 +154,17 @@
   color: #5b6472;
 }
 
+.task-content {
+  min-width: 0;
+}
+
+.task-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
 .status {
   flex: 0 0 auto;
   border-radius: 999px;
@@ -154,6 +183,14 @@
   background: #dff6e9;
 }
 
+.task-actions .danger-button {
+  background: #dc2626;
+}
+
+.task-actions .danger-button:hover {
+  background: #b91c1c;
+}
+
 .empty-message {
   margin: 0;
   color: #657084;
@@ -170,7 +207,8 @@
   }
 
   .task-item,
-  .section-title {
+  .section-title,
+  .task-actions {
     flex-direction: column;
     align-items: flex-start;
   }
