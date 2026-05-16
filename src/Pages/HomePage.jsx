@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskForm from "../Components/TaskForm";
 import TaskList from "../Components/TaskList";
 import { sampleTasks } from "../Interfaces/taskModel";
 
+const STORAGE_KEY = "task-tracker-tasks";
+
+const getInitialTasks = () => {
+  const savedTasks = localStorage.getItem(STORAGE_KEY);
+
+  if (savedTasks) {
+    return JSON.parse(savedTasks);
+  }
+
+  return sampleTasks;
+};
+
 function HomePage() {
-  const [tasks, setTasks] = useState(sampleTasks);
+  const [tasks, setTasks] = useState(getInitialTasks);
   const [editingTask, setEditingTask] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddTask = (task) => {
     const newTask = {
